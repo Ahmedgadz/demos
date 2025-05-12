@@ -31,7 +31,3 @@ class TestFanControler(unittest.TestCase):
         self.controler.T_cpu = 70.0
         self.controler.run_once()
         self.assertEqual(self.controler.tension, self.controler.max_tension)
-
-
-if __name__ == "__main__":
-    unittest.main()

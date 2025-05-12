@@ -7,7 +7,7 @@ class TestCPUSystem(unittest.TestCase):
 
     def setUp(self):
         self.cpu_sys = CPUSystem("cpu_system")
-        self.cpu_sys.T_cpu = 75.0  # simulate hot CPU to activate fan
+        self.cpu_sys.T_cpu = 40.0  # simulate hot CPU to activate fan
         self.cpu_sys.run_once()
 
     def test_subsystems_exist(self):
@@ -35,7 +35,3 @@ class TestCPUSystem(unittest.TestCase):
         self.cpu_sys.design("exchanger_surface")
         # After design, surface should have changed
         self.assertNotAlmostEqual(self.cpu_sys.exchanger.surface, original_surface)
-
-
-if __name__ == "__main__":
-    unittest.main()

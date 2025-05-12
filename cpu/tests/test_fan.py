@@ -32,7 +32,3 @@ class TestFan(unittest.TestCase):
         expected_mass_flow = 1.0  # 1.0 * 2.0 * 6 / 12
         self.assertAlmostEqual(self.fan.fl_out.mass_flow, expected_mass_flow, places=2)
         self.assertEqual(self.fan.fl_out.T, 35.0)
-
-
-if __name__ == "__main__":
-    unittest.main()

@@ -11,7 +11,7 @@ from cpu.systems import CPUSystem
 class NotebookTest(unittest.TestCase):
 
     def setUp(self):
-        # Création du système
+        # System setup
         self.cpu = CPUSystem("cpu")
         # Define the ambient temperature and CPU usage for the hot intensive simulation
         self.tamb = np.random.uniform(39.5, 40.5, 31)
@@ -19,11 +19,9 @@ class NotebookTest(unittest.TestCase):
 
     def test_surface_design_40C_air(self):
         """Surface should be correctly computed when T_air = 40°C"""
-        # Ajout du solveur
         self.design = self.cpu.add_driver(NonLinearSolver("solver"))
         self.runner = self.design.add_driver(RunSingleCase("runner"))
 
-        # Lien avec la méthode de design
         self.design.extend(self.cpu.design_methods["exchanger_surface"])
         self.runner.set_values(
             {
@@ -36,16 +34,14 @@ class NotebookTest(unittest.TestCase):
         self.cpu.run_drivers()
         surface = self.cpu.exchanger.surface
 
-        # On s'attend à une surface > 0.01 m² dans ce cas
+        # expected area > 0.01 m², surface = area of the heat exchanger
         self.assertGreater(surface, 0.01)
 
     def test_surface_design_30C_air(self):
         """Surface should be smaller with lower ambient temperature"""
-        # Ajout du solveur
         self.design = self.cpu.add_driver(NonLinearSolver("solver"))
         self.runner = self.design.add_driver(RunSingleCase("runner"))
 
-        # Lien avec la méthode de design
         self.design.extend(self.cpu.design_methods["exchanger_surface"])
         self.runner.set_values(
             {
@@ -58,7 +54,7 @@ class NotebookTest(unittest.TestCase):
         self.cpu.run_drivers()
         surface_30 = self.cpu.exchanger.surface
 
-        # On redéfinit à 40°C pour comparaison
+        # set up the temperature at 40°C to serve as comparison
         self.runner.set_values(
             {
                 "fan.T_air": 40.0,
@@ -300,7 +296,3 @@ class NotebookTest(unittest.TestCase):
     def tearDown(self):
         """Clean up the CPU system after each test."""
         del self.cpu
-
-
-if __name__ == "__main__":
-    unittest.main()

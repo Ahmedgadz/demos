@@ -32,13 +32,4 @@ class TestCPU(unittest.TestCase):
         self.cpu.run_once()
         self.assertAlmostEqual(self.cpu.power, 95)
         self.assertAlmostEqual(self.cpu.heat_flow_balance, 85)
-        # Manually compute expected next_T:
-        # dT/dt = heat_flow_balance / heat_capacity = 85 / 50 = 1.7
-        # next_T = T + dT = 40 + 1.7 = 41.7
         self.assertAlmostEqual(self.cpu.next_T, 41.7, places=1)
-
-
-print("Test CPU system")
-if __name__ == "__main__":
-    unittest.main()
-# unittest.main()
